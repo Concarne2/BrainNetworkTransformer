@@ -11,5 +11,5 @@ log_path: result
 save_learnable_graph: False
 
 # wandb
-wandb_entity: eggroup
-project: brainnetworktransformer
+wandb_entity: brain_net
+project: brain_net

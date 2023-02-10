@@ -12,7 +12,7 @@ def init_dataloader(cfg: DictConfig,
                     final_pearson: torch.tensor,
                     labels: torch.tensor) -> List[utils.DataLoader]:
     labels = F.one_hot(labels.to(torch.int64))
-    length = final_timeseires.shape[0]
+    length = final_pearson.shape[0]
     train_length = int(length*cfg.dataset.train_set*cfg.datasz.percentage)
     val_length = int(length*cfg.dataset.val_set)
     if cfg.datasz.percentage == 1.0:
