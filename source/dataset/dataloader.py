@@ -10,8 +10,10 @@ import torch.nn.functional as F
 def init_dataloader(cfg: DictConfig,
                     final_timeseires: torch.tensor,
                     final_pearson: torch.tensor,
-                    labels: torch.tensor) -> List[utils.DataLoader]:
-    labels = F.one_hot(labels.to(torch.int64))
+                    labels: torch.tensor,
+                    task: str) -> List[utils.DataLoader]:
+    if task == 'sex':
+        labels = F.one_hot(labels.to(torch.int64))
     length = final_pearson.shape[0]
     train_length = int(length*cfg.dataset.train_set*cfg.datasz.percentage)
     val_length = int(length*cfg.dataset.val_set)

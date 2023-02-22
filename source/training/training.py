@@ -32,17 +32,28 @@ class Train:
         self.total_steps = cfg.total_steps
         self.optimizers = optimizers
         self.lr_schedulers = lr_schedulers
-        self.loss_fn = torch.nn.CrossEntropyLoss(reduction='sum')
+
+        # print("obtaining task")
+        self.task = cfg.task
+        if self.task == "sex":
+            self.loss_fn = torch.nn.CrossEntropyLoss(reduction='sum')
+        elif self.task == "int_total" or self.task == "age":
+            self.loss_fn = torch.nn.MSELoss(reduction='sum')
+        else:
+            raise NotImplementedError
         self.save_path = Path(cfg.log_path) / cfg.unique_id
+        print(self.save_path)
+        # raise NotImplementedError
         self.save_learnable_graph = cfg.save_learnable_graph
 
         self.init_meters()
 
     def init_meters(self):
-        self.train_loss, self.val_loss,\
-            self.test_loss, self.train_accuracy,\
-            self.val_accuracy, self.test_accuracy = [
-                TotalMeter() for _ in range(6)]
+        if self.task == "sex":
+            self.train_loss, self.val_loss,\
+                self.test_loss, self.train_accuracy,\
+                self.val_accuracy, self.test_accuracy = [
+                    TotalMeter() for _ in range(6)]
 
     def reset_meters(self):
         for meter in [self.train_accuracy, self.val_accuracy,

@@ -7,6 +7,7 @@ from omegaconf import DictConfig, open_dict
 
 
 def load_abcd_data(cfg: DictConfig):
+    # print("loading abcd data")
 
     # ts_data = np.load(cfg.dataset.time_seires, allow_pickle=True)
     # pearson_data = np.load(cfg.dataset.node_feature, allow_pickle=True)
@@ -52,6 +53,8 @@ def load_abcd_data(cfg: DictConfig):
 
 
     roi_data = np.load(cfg.dataset.node_feature, allow_pickle=True)
+
+    # print(roi_data.shape)
     
     pearson_data = roi_data[:,2:].reshape(-1,180,180)
     subj_ids = roi_data[:,1]
@@ -81,4 +84,7 @@ def load_abcd_data(cfg: DictConfig):
     with open_dict(cfg):
         cfg.dataset.node_sz, cfg.dataset.node_feature_sz = final_pearson.shape[1:]
         cfg.dataset.timeseries_sz = final_timeseries.shape[1]
-    return final_timeseries, final_pearson, labels
+
+    task = cfg.dataset.task
+    # print("task: ", task)
+    return final_timeseries, final_pearson, labels, task
