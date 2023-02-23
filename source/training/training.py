@@ -37,7 +37,7 @@ class Train:
         if self.task == "sex":
             self.loss_fn = torch.nn.CrossEntropyLoss(reduction='sum')
         elif self.task == "int_total" or self.task == "age":
-            self.loss_fn = torch.nn.MSELoss(reduction='sum')
+            self.loss_fn = torch.nn.MSELoss(reduction='mean')
         else:
             raise NotImplementedError
         self.save_path = Path(cfg.log_path) / cfg.unique_id
