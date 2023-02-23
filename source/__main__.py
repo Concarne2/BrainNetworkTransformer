@@ -14,6 +14,8 @@ def model_training(cfg: DictConfig):
     with open_dict(cfg):
         cfg.unique_id = datetime.now().strftime("%m-%d-%H-%M-%S")
 
+
+    # print("obtaining dataset")
     dataloaders = dataset_factory(cfg)
     logger = logger_factory(cfg)
     model = model_factory(cfg)
@@ -23,6 +25,8 @@ def model_training(cfg: DictConfig):
                                          cfg=cfg)
     training = training_factory(cfg, model, optimizers,
                                 lr_schedulers, dataloaders, logger)
+    # training = training_factory(cfg, model, optimizers,
+    #                             lr_schedulers, dataloaders)
 
     training.train()
 
