@@ -73,6 +73,18 @@ class Train:
     def train_per_epoch(self, optimizer, lr_scheduler):
         self.model.train()
 
+        
+        # for time_series, node_feature, label in self.train_dataloader:
+        #     for i in range(node_feature.shape[0]):
+        #         for j in range(180):
+        #             for k in range(180):
+        #                 if node_feature[i][j][k] == 1:
+        #                     if j!=k:
+        #                         print('problem occured')
+        #                         print("position : ", i, j, k)
+                # else:
+                #     print(i, ' no problem')
+
         for time_series, node_feature, label in self.train_dataloader:
             label = label.float()
             self.current_step += 1

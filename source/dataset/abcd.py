@@ -22,6 +22,7 @@ def load_abcd_data(cfg: DictConfig):
     meta_data = pd.read_csv(cfg.dataset.label)[['subjectkey',task_col_name]].dropna()
     subj_ids_with_label = [subj_id in meta_data['subjectkey'].values for subj_id in subj_ids]
     #subj_ids[subj_ids_with_label]
+    final_subj_ids = subj_ids[subj_ids_with_label]
     pearson_data = np.nan_to_num(pearson_data.astype(float))
     final_pearson = pearson_data[subj_ids_with_label,:,:]
 
@@ -56,4 +57,4 @@ def load_abcd_data(cfg: DictConfig):
     with open_dict(cfg):
         cfg.dataset.node_sz, cfg.dataset.node_feature_sz = final_pearson.shape[1:]
         cfg.dataset.timeseries_sz = final_timeseries.shape[1]
-    return final_timeseries, final_pearson, labels, task
+    return final_subj_ids, final_timeseries, final_pearson, labels, task

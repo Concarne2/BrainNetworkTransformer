@@ -14,4 +14,4 @@ save_learnable_graph: False
 wandb_entity: brain_net
 project: brain_net
 
-task: age
+task: int_total
