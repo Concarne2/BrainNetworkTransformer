@@ -1,0 +1,15 @@
+name: ukb
+batch_size: 16
+test_batch_size: 16
+val_batch_size: 16
+train_set: 0.7
+val_set: 0.1
+node_feature: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/UKB_ROI_fisher.npy
+# time_seires: /local/scratch/xkan/ABCD/ABCD/abcd_rest-timeseires-HCP2016.npy
+# node_id: /local/scratch/xkan/ABCD/ABCD/ids_HCP2016.txt
+# seires_id: /local/scratch/xkan/ABCD/ABCD/ids_HCP2016_timeseires.txt
+label: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/UKB_phenotype_gps_fluidint.csv
+split_file_path: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/UKB_split_fixed_2.txt
+drop_last: True
+stratified: False
+task: age

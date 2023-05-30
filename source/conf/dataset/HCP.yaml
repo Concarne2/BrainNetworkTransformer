@@ -10,6 +10,7 @@ node_feature: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/HCP
 # seires_id: /local/scratch/xkan/ABCD/ABCD/ids_HCP2016_timeseires.txt
 label: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/HCP_1200_precise_age.csv
 label_int: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/HCP_1200_gender.csv
+split_file_path: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/HCP_split_fixed_3.txt
 drop_last: True
 stratified: False
-task: sex
+task: int_total

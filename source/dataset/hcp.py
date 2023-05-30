@@ -23,10 +23,13 @@ def load_hcp_data(cfg: DictConfig):
         task_col_name = 'CogTotalComp_AgeAdj'    
 
     if task == 'int_total':
-        meta_data = pd.read_csv(cfg.dataset.label_int)[['subject',task_col_name]].dropna()
+        meta_data = pd.read_csv(cfg.dataset.label_int)[['Subject',task_col_name]].dropna()
     else:
         meta_data = pd.read_csv(cfg.dataset.label)[['subject',task_col_name]].dropna()
-    subj_ids_with_label = [subj_id in meta_data['subject'].values for subj_id in subj_ids]
+    if task != 'int_total':
+        subj_ids_with_label = [subj_id in meta_data['subject'].values for subj_id in subj_ids]
+    else:
+        subj_ids_with_label = [subj_id in meta_data['Subject'].values for subj_id in subj_ids]
     #subj_ids[subj_ids_with_label]
     final_subj_ids = subj_ids[subj_ids_with_label]
     pearson_data = np.nan_to_num(pearson_data.astype(float))
@@ -45,8 +48,11 @@ def load_hcp_data(cfg: DictConfig):
             sex = meta_data[meta_data['subject']==subj_id][task_col_name].values[0]
             sex = 1 if sex == 'M' else 0
             labels.append(sex)
-        else:
+        elif task == 'age':
             target = meta_data[meta_data['subject']==subj_id][task_col_name].values[0]
+            labels.append((target - target_mean)/target_std)
+        elif task == 'int_total':
+            target = meta_data[meta_data['Subject']==subj_id][task_col_name].values[0]
             labels.append((target - target_mean)/target_std)
     labels = np.array(labels)
 

@@ -36,7 +36,7 @@ class Train:
         self.task = cfg.task
         if self.task == "sex":
             self.loss_fn = torch.nn.CrossEntropyLoss(reduction='sum')
-        elif self.task == "int_total" or self.task == "age":
+        elif self.task == "int_total" or self.task == "age" or self.task == "int_fluid":
             self.loss_fn = torch.nn.MSELoss(reduction='mean')
         else:
             raise NotImplementedError
@@ -52,7 +52,7 @@ class Train:
                 self.test_loss, self.train_accuracy,\
                 self.val_accuracy, self.test_accuracy = [
                     TotalMeter() for _ in range(6)]
-        elif self.task == "age" or self.task == "int_total":
+        elif self.task == "age" or self.task == "int_total" or self.task == "int_fluid":
             self.train_loss, self.val_loss,\
                 self.test_loss, self.train_mae,\
                 self.val_mae, self.test_mae = [
@@ -64,7 +64,7 @@ class Train:
                         self.test_accuracy, self.train_loss,
                         self.val_loss, self.test_loss]:
                 meter.reset()
-        elif self.task == "age" or self.task == "int_total":
+        elif self.task == "age" or self.task == "int_total" or self.task == "int_fluid":
             for meter in [self.train_mae, self.val_mae,
                         self.test_mae, self.train_loss,
                         self.val_loss, self.test_loss]:
@@ -112,7 +112,7 @@ class Train:
             if self.task == 'sex':
                 top1 = accuracy(predict, label[:, 1])[0]
                 self.train_accuracy.update_with_weight(top1, label.shape[0])
-            elif self.task == 'age' or self.task == 'int_total':
+            elif self.task == 'age' or self.task == 'int_total' or self.task == "int_fluid":
                 mae = F.l1_loss(predict, label)
                 self.train_mae.update_with_weight(mae.item(), label.shape[0])
             # wandb.log({"LR": lr_scheduler.lr,
@@ -130,7 +130,7 @@ class Train:
 
             label = label.float()
 
-            if self.task == 'age' or self.task == 'int_total':
+            if self.task == 'age' or self.task == 'int_total' or self.task == "int_fluid":
                 output = output.squeeze(1)
 
             loss = self.loss_fn(output, label)
@@ -141,7 +141,7 @@ class Train:
                 acc_meter.update_with_weight(top1, label.shape[0])
                 result += F.softmax(output, dim=1)[:, 1].tolist()
                 labels += label[:, 1].tolist()
-            elif self.task == 'age' or self.task == 'int_total':
+            elif self.task == 'age' or self.task == 'int_total' or self.task == "int_fluid":
                 mae = F.l1_loss(output, label)
                 acc_meter.update_with_weight(mae.item(), label.shape[0])
 
@@ -245,7 +245,7 @@ class Train:
                     "Val Loss": self.val_loss.avg,
                 })
 
-            elif self.task == 'age' or self.task == 'int_total':
+            elif self.task == 'age' or self.task == 'int_total' or self.task == "int_fluid":
                 self.test_per_epoch(self.val_dataloader, self.val_loss, self.val_mae)
                 self.test_per_epoch(self.test_dataloader, self.test_loss, self.test_mae)
 

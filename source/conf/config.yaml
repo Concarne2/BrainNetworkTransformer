@@ -1,12 +1,12 @@
 defaults:
-  - dataset: ABCD
+  - dataset: UKB
   - model: bnt # brainnetcnn, fbnetgen, bnt, transformer
   - optimizer: adam
   - training: basic_training
   - datasz: 100p
   - preprocess: mixup
 
-repeat_time: 5
+repeat_time: 1
 log_path: result
 save_learnable_graph: False
 
@@ -14,4 +14,4 @@ save_learnable_graph: False
 wandb_entity: brain_net
 project: brain_net
 
-task: int_total
+task: age

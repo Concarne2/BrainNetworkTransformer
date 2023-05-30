@@ -9,7 +9,7 @@ node_feature: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/ABC
 # node_id: /local/scratch/xkan/ABCD/ABCD/ids_HCP2016.txt
 # seires_id: /local/scratch/xkan/ABCD/ABCD/ids_HCP2016_timeseires.txt
 label: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/ABCD_phenotype_total.csv
-split_file_path: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/ABCD_split_fixed_1.txt
+split_file_path: /home/yongho/BrainNetReproduction/BrainNetworkTransformer/data/ABCD_split_fixed_3.txt
 drop_last: True
 stratified: False
 task: int_total
